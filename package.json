@@ -1,6 +1,6 @@
 {
   "name": "create-red-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scaffold licensed RED projects — the production-ready SaaS starter kit with Convex, React, and BetterAuth",
   "type": "module",
   "bin": {
