@@ -1,9 +1,7 @@
 name: Publish CLI
 
 on:
-  push:
-    tags:
-      - "cli-v*"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -49,7 +47,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION="${GITHUB_REF_NAME#cli-v}"
-          gh release create "$GITHUB_REF_NAME" \
+          VERSION=$(jq -r .version package.json)
+          gh release create "cli-v${VERSION}" \
             --title "create-red-app v${VERSION}" \
             --generate-notes
