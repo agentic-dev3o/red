@@ -1,0 +1,48 @@
+{
+  "name": "create-red-app",
+  "version": "1.0.0",
+  "description": "Scaffold licensed RED projects — the production-ready SaaS starter kit with Convex, React, and BetterAuth",
+  "type": "module",
+  "bin": {
+    "create-red-app": "dist/cli.mjs"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "dev": "bun run src/cli.ts",
+    "test": "bun test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "red",
+    "saas",
+    "convex",
+    "react",
+    "better-auth",
+    "boilerplate",
+    "starter-kit",
+    "create-app"
+  ],
+  "author": "dev3o",
+  "license": "MIT",
+  "homepage": "https://red.dev3o.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agentic-dev3o/red.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.11",
+    "@types/bun": "^1.2.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
