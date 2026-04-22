@@ -59,7 +59,7 @@ export function verifySkillsPresent(dir: string): void {
 			out.warn(
 				`Expected skill directory not found: ${skillDir}\n` +
 					"    The release archive may be incomplete. " +
-					"Please verify the release or contact support.",
+					"Please verify the release or contact support at contact@dev3o.com.",
 			)
 		}
 	}

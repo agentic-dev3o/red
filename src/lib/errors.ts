@@ -25,7 +25,7 @@ export function httpError(status: number, url: string): CliError {
 		case 403:
 			return new CliError(
 				`License key is invalid or expired (HTTP ${status}).\n` +
-					"  Check your key and try again, or contact support at https://dev3o.com",
+					"  Check your key and try again, or contact support at contact@dev3o.com",
 			)
 		case 404:
 			return new CliError(
@@ -37,7 +37,7 @@ export function httpError(status: number, url: string): CliError {
 		default:
 			return new CliError(
 				`Unexpected response from license server (HTTP ${status}): ${url}\n` +
-					"  If this persists, please contact support at https://dev3o.com",
+					"  If this persists, please contact support at contact@dev3o.com",
 			)
 	}
 }

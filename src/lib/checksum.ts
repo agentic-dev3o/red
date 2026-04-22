@@ -17,7 +17,7 @@ export function verifyChecksum(data: Buffer, expected: string): void {
 				`  Expected: ${expected}\n` +
 				`  Received: ${actual}\n\n` +
 				"  The archive may be corrupted or tampered with.\n" +
-				"  Try downloading again, or contact support at https://dev3o.com",
+				"  Try downloading again, or contact support at contact@dev3o.com",
 		)
 	}
 }
