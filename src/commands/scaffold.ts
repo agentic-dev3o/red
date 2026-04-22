@@ -15,14 +15,14 @@
  */
 
 import { existsSync, readdirSync } from "node:fs"
-import { resolve } from "node:path"
+import { basename, resolve } from "node:path"
 import type { VersionEntry } from "../lib/api-client"
 import * as api from "../lib/api-client"
 import { cleanupTemp, copyDirRecursive, createTempDir, extractZip, unwrapPrefix } from "../lib/archive"
 import type { CliConfig } from "../lib/config"
 import { CliError, redactKey } from "../lib/errors"
 import * as out from "../lib/output"
-import { verifySkillsPresent, writeLicenseFile, writeVersionFile } from "../lib/project-files"
+import { updatePackageName, verifySkillsPresent, writeLicenseFile, writeVersionFile } from "../lib/project-files"
 import { fetchVerifiedRelease } from "../lib/release"
 import { findVersion, latestStable, sortVersions } from "../lib/versioning"
 
@@ -108,12 +108,16 @@ export async function scaffold(opts: ScaffoldOptions): Promise<void> {
 		copyDirRecursive(unwrapped, destDir)
 		out.success(`Extracted to ${directory}/`)
 
-		// 8 — Write project files
+		// 8 — Rewrite package.json name
+		const pkgName = updatePackageName(destDir, basename(destDir))
+		if (pkgName) out.success(`Set package.json name to "${pkgName}"`)
+
+		// 9 — Write project files
 		writeLicenseFile(destDir, licenseKey)
 		writeVersionFile(destDir, target.version)
 		out.success("Wrote .red-license and .red-version")
 
-		// 9 — Verify skills
+		// 10 — Verify skills
 		verifySkillsPresent(destDir)
 	} finally {
 		cleanupTemp(tempDir)

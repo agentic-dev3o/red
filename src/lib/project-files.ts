@@ -7,6 +7,36 @@ import { join } from "node:path"
 import { LICENSE_FILENAME, REQUIRED_SKILL_DIRS, VERSION_FILENAME } from "./config"
 import * as out from "./output"
 
+/**
+ * Sanitize a raw app name into a valid npm package name:
+ * lowercase, only [a-z0-9-._], no leading/trailing separators.
+ */
+export function toNpmName(raw: string): string {
+	const cleaned = raw
+		.trim()
+		.toLowerCase()
+		.replace(/[^a-z0-9\-_.]+/g, "-")
+		.replace(/^[._-]+/, "")
+		.replace(/[._-]+$/, "")
+	return cleaned || "app"
+}
+
+/**
+ * Rewrite the "name" field in the scaffolded package.json so the new
+ * project identifies itself rather than the "red-boilerplate" source.
+ * Returns the name that was written, or undefined if package.json is missing.
+ */
+export function updatePackageName(dir: string, appName: string): string | undefined {
+	const pkgPath = join(dir, "package.json")
+	if (!existsSync(pkgPath)) return undefined
+
+	const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"))
+	const name = toNpmName(appName)
+	pkg.name = name
+	writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`, "utf-8")
+	return name
+}
+
 /** Write the buyer license key to .red-license. */
 export function writeLicenseFile(dir: string, key: string): void {
 	writeFileSync(join(dir, LICENSE_FILENAME), `${key}\n`, "utf-8")
